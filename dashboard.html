@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard - Trang quản lý">
+    <title>Dashboard | Auth System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">🚀</div>
+                <h2>Dashboard</h2>
+            </div>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" id="navDashboard">
+                            <span class="icon">📊</span>
+                            Tổng quan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="navAnalytics">
+                            <span class="icon">📈</span>
+                            Phân tích
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="navProjects">
+                            <span class="icon">📁</span>
+                            Dự án
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="navSettings">
+                            <span class="icon">⚙️</span>
+                            Cài đặt
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="login.html" class="btn btn-logout" id="logoutBtn" style="width: 100%;">
+                    🚪 Đăng xuất
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Chào mừng trở lại! 👋</h1>
+                <div class="user-info">
+                    <div class="user-details">
+                        <p class="name" id="userName">Người dùng</p>
+                        <p class="email" id="userEmail">user@example.com</p>
+                    </div>
+                    <div class="user-avatar" id="userAvatar">U</div>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card" id="statUsers">
+                    <div class="icon purple">👥</div>
+                    <p class="value">1,234</p>
+                    <p class="label">Tổng người dùng</p>
+                </div>
+                <div class="stat-card" id="statRevenue">
+                    <div class="icon blue">💰</div>
+                    <p class="value">$45,678</p>
+                    <p class="label">Doanh thu</p>
+                </div>
+                <div class="stat-card" id="statOrders">
+                    <div class="icon green">📦</div>
+                    <p class="value">892</p>
+                    <p class="label">Đơn hàng</p>
+                </div>
+                <div class="stat-card" id="statGrowth">
+                    <div class="icon orange">📈</div>
+                    <p class="value">+23%</p>
+                    <p class="label">Tăng trưởng</p>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="content-card">
+                <h2>Hoạt động gần đây</h2>
+                <table class="data-table" id="activityTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Hoạt động</th>
+                            <th>Người thực hiện</th>
+                            <th>Thời gian</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#001</td>
+                            <td>Đăng nhập hệ thống</td>
+                            <td>user@example.com</td>
+                            <td>2 phút trước</td>
+                            <td><span class="status-badge success">Thành công</span></td>
+                        </tr>
+                        <tr>
+                            <td>#002</td>
+                            <td>Cập nhật thông tin</td>
+                            <td>admin@example.com</td>
+                            <td>15 phút trước</td>
+                            <td><span class="status-badge success">Thành công</span></td>
+                        </tr>
+                        <tr>
+                            <td>#003</td>
+                            <td>Tạo đơn hàng mới</td>
+                            <td>manager@example.com</td>
+                            <td>1 giờ trước</td>
+                            <td><span class="status-badge pending">Đang xử lý</span></td>
+                        </tr>
+                        <tr>
+                            <td>#004</td>
+                            <td>Xóa sản phẩm</td>
+                            <td>admin@example.com</td>
+                            <td>2 giờ trước</td>
+                            <td><span class="status-badge error">Thất bại</span></td>
+                        </tr>
+                        <tr>
+                            <td>#005</td>
+                            <td>Thêm người dùng mới</td>
+                            <td>hr@example.com</td>
+                            <td>3 giờ trước</td>
+                            <td><span class="status-badge success">Thành công</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Load user info from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const userEmail = localStorage.getItem('userEmail') || 'user@example.com';
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            // Display user info
+            document.getElementById('userEmail').textContent = userEmail;
+            document.getElementById('userName').textContent = userEmail.split('@')[0];
+            document.getElementById('userAvatar').textContent = userEmail.charAt(0).toUpperCase();
+
+            // Handle logout
+            document.getElementById('logoutBtn').addEventListener('click', function (e) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userEmail');
+            });
+
+            // Navigation click handlers
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

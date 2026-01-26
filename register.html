@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Đăng ký tài khoản mới">
+    <title>Đăng Ký | Auth System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .password-requirements {
+            margin-top: 8px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .password-requirements p {
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 4px 0;
+            color: var(--text-secondary);
+        }
+
+        .requirement.valid {
+            color: var(--success-color);
+        }
+
+        .requirement .icon {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">✨</div>
+                <h1>Tạo tài khoản mới</h1>
+                <p>Đăng ký để bắt đầu sử dụng hệ thống</p>
+            </div>
+
+            <form id="registerForm" action="login.html" method="GET">
+                <div class="form-group" id="fullnameGroup">
+                    <label for="fullname">Họ và tên</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Nhập họ và tên" required
+                        autocomplete="name" minlength="2">
+                    <span class="error-message" id="fullnameError">Họ tên phải có ít nhất 2 ký tự</span>
+                </div>
+
+                <div class="form-group" id="usernameGroup">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" name="username" placeholder="Nhập username (10-15 ký tự)" required
+                        autocomplete="username" minlength="10" maxlength="15">
+                    <span class="error-message" id="usernameError">Username phải có độ dài từ 10-15 ký tự</span>
+                </div>
+
+                <div class="form-group" id="emailGroup">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Nhập email (vd: user@domain.com)" required
+                        autocomplete="email">
+                    <span class="error-message" id="emailError">Email không đúng định dạng (vd: user@domain.com)</span>
+                </div>
+
+                <div class="form-group" id="passwordGroup">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" name="password" placeholder="Tạo mật khẩu phức tạp" required
+                        autocomplete="new-password" minlength="8">
+                    <span class="error-message" id="passwordError">Mật khẩu không đáp ứng yêu cầu</span>
+                    <div class="password-requirements">
+                        <p>Mật khẩu phải có:</p>
+                        <div class="requirement" id="reqLength">
+                            <span class="icon">○</span> Ít nhất 8 ký tự
+                        </div>
+                        <div class="requirement" id="reqUppercase">
+                            <span class="icon">○</span> Ít nhất 1 chữ in hoa (A-Z)
+                        </div>
+                        <div class="requirement" id="reqLowercase">
+                            <span class="icon">○</span> Ít nhất 1 chữ thường (a-z)
+                        </div>
+                        <div class="requirement" id="reqNumber">
+                            <span class="icon">○</span> Ít nhất 1 số (0-9)
+                        </div>
+                        <div class="requirement" id="reqSpecial">
+                            <span class="icon">○</span> Ít nhất 1 ký tự đặc biệt (!@#$%^&*)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" id="confirmPasswordGroup">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu"
+                        required autocomplete="new-password">
+                    <span class="error-message" id="confirmPasswordError">Mật khẩu xác nhận không khớp</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="registerBtn">
+                    Đăng Ký
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password validation functions
+        const passwordValidation = {
+            length: (pwd) => pwd.length >= 8,
+            uppercase: (pwd) => /[A-Z]/.test(pwd),
+            lowercase: (pwd) => /[a-z]/.test(pwd),
+            number: (pwd) => /[0-9]/.test(pwd),
+            special: (pwd) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pwd)
+        };
+
+        // Real-time password validation feedback
+        document.getElementById('password').addEventListener('input', function(e) {
+            const pwd = e.target.value;
+            
+            updateRequirement('reqLength', passwordValidation.length(pwd));
+            updateRequirement('reqUppercase', passwordValidation.uppercase(pwd));
+            updateRequirement('reqLowercase', passwordValidation.lowercase(pwd));
+            updateRequirement('reqNumber', passwordValidation.number(pwd));
+            updateRequirement('reqSpecial', passwordValidation.special(pwd));
+        });
+
+        function updateRequirement(id, isValid) {
+            const element = document.getElementById(id);
+            const icon = element.querySelector('.icon');
+            
+            if (isValid) {
+                element.classList.add('valid');
+                icon.textContent = '✓';
+            } else {
+                element.classList.remove('valid');
+                icon.textContent = '○';
+            }
+        }
+
+        function isPasswordValid(pwd) {
+            return passwordValidation.length(pwd) &&
+                   passwordValidation.uppercase(pwd) &&
+                   passwordValidation.lowercase(pwd) &&
+                   passwordValidation.number(pwd) &&
+                   passwordValidation.special(pwd);
+        }
+
+        // Email validation regex - strict format
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            let isValid = true;
+
+            // Reset errors
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+
+            // Validate fullname (min 2 chars)
+            const fullname = document.getElementById('fullname');
+            if (fullname.value.trim().length < 2) {
+                document.getElementById('fullnameGroup').classList.add('error');
+                isValid = false;
+            }
+
+            // Validate username (10-15 chars)
+            const username = document.getElementById('username');
+            const usernameLength = username.value.trim().length;
+            if (usernameLength < 10 || usernameLength > 15) {
+                document.getElementById('usernameGroup').classList.add('error');
+                isValid = false;
+            }
+
+            // Validate email format
+            const email = document.getElementById('email');
+            if (!emailRegex.test(email.value)) {
+                document.getElementById('emailGroup').classList.add('error');
+                isValid = false;
+            }
+
+            // Validate password complexity
+            const password = document.getElementById('password');
+            if (!isPasswordValid(password.value)) {
+                document.getElementById('passwordGroup').classList.add('error');
+                isValid = false;
+            }
+
+            // Validate confirm password
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (password.value !== confirmPassword.value) {
+                document.getElementById('confirmPasswordGroup').classList.add('error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            } else {
+                // Show success and redirect
+                alert('Đăng ký thành công! Vui lòng đăng nhập.');
+            }
+        });
+    </script>
+</body>
+
+</html>
