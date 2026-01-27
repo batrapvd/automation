@@ -1,0 +1,77 @@
+{
+    "validUsers": [
+        {
+            "email": "user@example.com",
+            "password": "password123",
+            "description": "Standard valid user"
+        },
+        {
+            "email": "user@mail.company.com",
+            "password": "Test@123",
+            "description": "User with subdomain email"
+        },
+        {
+            "email": "admin@test.org",
+            "password": "Admin123!",
+            "description": "Admin user"
+        }
+    ],
+    "validRegistrations": [
+        {
+            "fullName": "Nguyen Van A",
+            "username": "testuser1234",
+            "email": "test@example.com",
+            "password": "Test@123456",
+            "confirmPassword": "Test@123456",
+            "description": "Standard valid registration"
+        },
+        {
+            "fullName": "Tran Thi B",
+            "username": "newuser12345",
+            "email": "newuser@test.com",
+            "password": "Abc@1234!",
+            "confirmPassword": "Abc@1234!",
+            "description": "Registration with complex password"
+        },
+        {
+            "fullName": "Le Van C",
+            "username": "abcdefghij",
+            "email": "levanc@example.com",
+            "password": "Test@12A",
+            "confirmPassword": "Test@12A",
+            "description": "Registration with minimum valid username (10 chars)"
+        },
+        {
+            "fullName": "Pham Van D",
+            "username": "abcdefghijklmno",
+            "email": "phamvand@example.com",
+            "password": "Pass@word1",
+            "confirmPassword": "Pass@word1",
+            "description": "Registration with maximum valid username (15 chars)"
+        }
+    ],
+    "boundaryPasswords": {
+        "minValid": {
+            "password": "Test@12A",
+            "length": 8,
+            "description": "Minimum valid password (8 chars)"
+        },
+        "aboveMin": {
+            "password": "Test@123A",
+            "length": 9,
+            "description": "Above minimum (9 chars)"
+        }
+    },
+    "boundaryUsernames": {
+        "minValid": {
+            "username": "abcdefghij",
+            "length": 10,
+            "description": "Minimum valid username (10 chars)"
+        },
+        "maxValid": {
+            "username": "abcdefghijklmno",
+            "length": 15,
+            "description": "Maximum valid username (15 chars)"
+        }
+    }
+}
